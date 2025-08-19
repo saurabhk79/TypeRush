@@ -1,0 +1,115 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
+  },
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        cyberpunk: {
+          primary: "#ff00ff",
+          secondary: "#00ffff",
+          accent: "#ffff00",
+          neutral: "#1a1a2e",
+          "base-100": "#0f0f23",
+          "base-200": "#16213e",
+          "base-300": "#1a1a2e",
+          info: "#00ffff",
+          success: "#00ff00",
+          warning: "#ffff00",
+          error: "#ff0040",
+        },
+        typewriter: {
+          primary: "#8b4513",
+          secondary: "#daa520",
+          accent: "#cd853f",
+          neutral: "#2f2f2f",
+          "base-100": "#f5f5dc",
+          "base-200": "#f0e68c",
+          "base-300": "#daa520",
+          info: "#4682b4",
+          success: "#228b22",
+          warning: "#ffa500",
+          error: "#dc143c",
+        },
+        matrix: {
+          primary: "#00ff41",
+          secondary: "#008f11",
+          accent: "#65ff00",
+          neutral: "#0d1117",
+          "base-100": "#000000",
+          "base-200": "#0d1117",
+          "base-300": "#161b22",
+          info: "#00ff41",
+          success: "#00ff41",
+          warning: "#ffff00",
+          error: "#ff0040",
+        },
+        minimal: {
+          primary: "#374151",
+          secondary: "#6b7280",
+          accent: "#9ca3af",
+          neutral: "#f3f4f6",
+          "base-100": "#ffffff",
+          "base-200": "#f9fafb",
+          "base-300": "#f3f4f6",
+          info: "#3b82f6",
+          success: "#10b981",
+          warning: "#f59e0b",
+          error: "#ef4444",
+        },
+      },
+      "light",
+      "dark",
+    ],
+  },
+}

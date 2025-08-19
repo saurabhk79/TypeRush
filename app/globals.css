@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme-specific animations and effects */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes matrix-code {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes typewriter-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes cyberpunk-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor;
+  }
+}
+
+@keyframes cyberpunk-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.5);
+  }
+}
+
+@keyframes typewriter-typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes minimal-fade {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Matrix Theme */
+.matrix-bg {
+  background: linear-gradient(135deg, #000000 0%, #0d1117 50%, #000000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%);
+  animation: matrix-rain 20s linear infinite;
+  pointer-events: none;
+}
+
+.matrix-bg::after {
+  content: "01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100";
+  position: absolute;
+  top: 10%;
+  left: -100%;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: rgba(0, 255, 65, 0.1);
+  white-space: nowrap;
+  animation: matrix-code 15s linear infinite;
+  pointer-events: none;
+}
+
+[data-theme="matrix"] .text-primary {
+  animation: matrix-code 3s ease-in-out infinite;
+}
+
+/* Cyberpunk Theme */
+.cyberpunk-bg {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+}
+
+.cyberpunk-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(45deg, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(-45deg, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+[data-theme="cyberpunk"] .cyberpunk-text {
+  animation: cyberpunk-glow 2s ease-in-out infinite alternate;
+}
+
+[data-theme="cyberpunk"] .btn-primary {
+  animation: cyberpunk-pulse 2s ease-in-out infinite;
+}
+
+[data-theme="cyberpunk"] .stat {
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
+}
+
+/* Typewriter Theme */
+.typewriter-bg {
+  background: linear-gradient(135deg, #f5f5dc 0%, #f0e68c 50%, #daa520 100%);
+  position: relative;
+}
+
+.typewriter-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at 30% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(205, 133, 63, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+[data-theme="typewriter"] .typewriter-cursor::after {
+  content: "|";
+  animation: typewriter-blink 1s infinite;
+  color: #8b4513;
+}
+
+[data-theme="typewriter"] .stat {
+  border: 2px solid rgba(139, 69, 19, 0.2);
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.1);
+  background: rgba(245, 245, 220, 0.9);
+}
+
+[data-theme="typewriter"] .btn {
+  border: 2px solid currentColor;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Minimal Theme */
+.minimal-bg {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
+  position: relative;
+}
+
+[data-theme="minimal"] .stat {
+  border: 1px solid rgba(55, 65, 81, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="minimal"] .btn {
+  border: 1px solid rgba(55, 65, 81, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="minimal"] .minimal-fade {
+  animation: minimal-fade 2s ease-in-out infinite alternate;
+}
+
+/* Theme-specific text effects */
+[data-theme="matrix"] .font-mono {
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+}
+
+[data-theme="cyberpunk"] .font-mono {
+  font-family: "Courier New", monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+[data-theme="typewriter"] .font-mono {
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+}
+
+[data-theme="minimal"] .font-mono {
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive theme adjustments */
+@media (max-width: 768px) {
+  .matrix-bg::after {
+    font-size: 10px;
+  }
+
+  [data-theme="cyberpunk"] .cyberpunk-text {
+    animation-duration: 3s;
+  }
+}
+
+/* Theme transition effects */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom scrollbar for themes */
+[data-theme="matrix"] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-theme="matrix"] ::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+[data-theme="matrix"] ::-webkit-scrollbar-thumb {
+  background: #00ff41;
+  border-radius: 4px;
+}
+
+[data-theme="cyberpunk"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  border-radius: 4px;
+}
+
+[data-theme="typewriter"] ::-webkit-scrollbar-thumb {
+  background: #8b4513;
+  border-radius: 4px;
+}
+
+[data-theme="minimal"] ::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
