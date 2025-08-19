@@ -1,7 +1,7 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { useTheme } from "./theme-provider"
 
 interface TestResult {
   wpm: number
@@ -21,7 +21,7 @@ interface ResultsScreenProps {
 }
 
 export default function ResultsScreen({ result, onRestart }: ResultsScreenProps) {
-  const { theme } = useTheme()
+  const [showCopied, setShowCopied] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.8 },
@@ -54,7 +54,6 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
     },
   }
 
-  // Calculate performance rating
   const getPerformanceRating = () => {
     if (result.wpm >= 70 && result.accuracy >= 95) return { rating: "Excellent", color: "text-success" }
     if (result.wpm >= 50 && result.accuracy >= 90) return { rating: "Good", color: "text-info" }
@@ -64,7 +63,6 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
 
   const performance = getPerformanceRating()
 
-  // Create error heatmap data
   const createErrorHeatmap = () => {
     const errorEntries = Object.entries(result.errors).sort(([, a], [, b]) => b - a)
     const maxErrors = errorEntries.length > 0 ? errorEntries[0][1] : 1
@@ -78,7 +76,6 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
 
   const errorHeatmap = createErrorHeatmap()
 
-  // WPM progression chart (simplified visualization)
   const renderWpmChart = () => {
     const wpmProgression = result.wpmProgression || []
     const maxWpm = wpmProgression.length > 0 ? Math.max(...wpmProgression, result.wpm) : result.wpm
@@ -114,7 +111,7 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
       {/* Header */}
       <motion.div variants={itemVariants} className="text-center mb-8">
         <motion.h1
-          className={`text-5xl font-bold mb-2 ${theme === "cyberpunk" ? "cyberpunk-text" : ""}`}
+          className={`text-5xl font-bold mb-2`}
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
         >
@@ -223,13 +220,13 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
       </motion.div>
 
       {/* WPM Progression Chart */}
-      <motion.div variants={itemVariants} className="mb-8">
+      {/* <motion.div variants={itemVariants} className="mb-8">
         <h3 className="text-2xl font-bold mb-4 text-center">WPM Progression</h3>
         <div className="bg-base-200 rounded-xl p-6">
           {renderWpmChart()}
           <p className="text-center text-sm text-base-content/60 mt-2">Your typing speed throughout the test</p>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Error Heatmap */}
       {errorHeatmap.length > 0 && (
@@ -278,10 +275,12 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
-            // Share functionality could be added here
+        
             navigator.clipboard?.writeText(
               `I just typed ${result.wpm} WPM with ${result.accuracy}% accuracy on TypeSpeed Pro!`,
             )
+            setShowCopied(true)
+            setTimeout(() => setShowCopied(false), 2000)
           }}
         >
           Share Results
@@ -289,7 +288,7 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
       </motion.div>
 
       {/* Motivational Message */}
-      <motion.div variants={itemVariants} className="text-center mt-8 p-4 bg-base-200 rounded-xl">
+      <motion.div variants={itemVariants} className="text-center mt-8 p-4 rounded-xl">
         <motion.p
           className="text-lg text-base-content/80"
           animate={{ opacity: [0.7, 1, 0.7] }}
@@ -302,6 +301,17 @@ export default function ResultsScreen({ result, onRestart }: ResultsScreenProps)
               : "Every expert was once a beginner. Keep typing! 💪"}
         </motion.p>
       </motion.div>
+
+      {showCopied && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-primary text-primary-content px-4 py-2 rounded shadow-lg"
+        >
+          Copied to clipboard!
+        </motion.div>
+      )}
     </motion.div>
   )
 }

@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-// In-memory storage for demo purposes
 const ghostData: Record<string, any> = {}
 
 export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {

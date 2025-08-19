@@ -1,7 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-// In-memory storage for demo purposes
-// In a real app, you'd use a database
 const scores: any[] = []
 
 export async function POST(request: NextRequest) {

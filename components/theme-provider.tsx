@@ -17,7 +17,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("minimal")
 
   useEffect(() => {
-    // Load saved theme from localStorage
     const savedTheme = localStorage.getItem("typing-test-theme") as Theme
     if (savedTheme && ["cyberpunk", "typewriter", "matrix", "minimal"].includes(savedTheme)) {
       setTheme(savedTheme)
@@ -25,33 +24,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    // Save theme to localStorage
     localStorage.setItem("typing-test-theme", theme)
 
-    // Apply theme to document
     document.documentElement.setAttribute("data-theme", theme)
 
-    // Remove all theme-specific body classes
     document.body.className = document.body.className
       .split(" ")
       .filter((cls) => !["matrix-bg", "cyberpunk-bg", "typewriter-bg", "minimal-bg"].includes(cls))
       .join(" ")
 
-    // Add theme-specific classes and effects
     switch (theme) {
       case "matrix":
         document.body.classList.add("matrix-bg")
-        // Add matrix rain effect
         createMatrixEffect()
         break
       case "cyberpunk":
         document.body.classList.add("cyberpunk-bg")
-        // Add cyberpunk glitch effect
         createCyberpunkEffect()
         break
       case "typewriter":
         document.body.classList.add("typewriter-bg")
-        // Add typewriter sound effect (visual only)
         createTypewriterEffect()
         break
       case "minimal":
@@ -61,11 +53,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme])
 
   const createMatrixEffect = () => {
-    // Remove existing matrix elements
     const existingMatrix = document.querySelectorAll(".matrix-char")
     existingMatrix.forEach((el) => el.remove())
 
-    // Create falling matrix characters
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?"
     const columns = Math.floor(window.innerWidth / 20)
 
@@ -79,13 +69,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       char.textContent = chars[Math.floor(Math.random() * chars.length)]
       document.body.appendChild(char)
 
-      // Remove after animation
       setTimeout(() => char.remove(), 10000)
     }
   }
 
   const createCyberpunkEffect = () => {
-    // Add subtle screen glitch effect
     const glitchOverlay = document.createElement("div")
     glitchOverlay.className = "fixed inset-0 pointer-events-none z-0"
     glitchOverlay.style.background = `
@@ -94,7 +82,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     `
     glitchOverlay.style.animation = "cyberpunk-pulse 3s ease-in-out infinite"
 
-    // Remove existing glitch overlay
     const existing = document.querySelector(".cyberpunk-glitch")
     if (existing) existing.remove()
 
@@ -103,7 +90,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }
 
   const createTypewriterEffect = () => {
-    // Add paper texture overlay
     const paperOverlay = document.createElement("div")
     paperOverlay.className = "fixed inset-0 pointer-events-none z-0 opacity-10"
     paperOverlay.style.backgroundImage = `
@@ -111,7 +97,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     `
     paperOverlay.style.backgroundSize = "20px 20px"
 
-    // Remove existing paper overlay
     const existing = document.querySelector(".typewriter-paper")
     if (existing) existing.remove()
 
